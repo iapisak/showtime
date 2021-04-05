@@ -1,0 +1,17 @@
+.item {
+    cursor: pointer;
+    margin: 0 5px;
+    transition: transform 300ms ease 100ms;
+}
+
+.item-container:hover .item {
+    transform: translateX(-8%);
+}
+
+.item:hover ~ .item {
+    transform: translateX(8%);
+}
+
+.item:hover {
+    transform: scale(1.05) !important;
+}
