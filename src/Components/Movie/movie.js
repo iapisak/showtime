@@ -3,11 +3,12 @@ import { getPopular } from '../api'
 
 export default function Home () {
     const [ movies, setMovies ] = useState()
+    const [ type, setType ] = useState('movie')
     const [ bgImage, setBgImage ] = useState() 
     
     useEffect(() => {
-      getPopular(setMovies)
-    }, [])
+      getPopular(setMovies, type)
+    }, [type])
   
     useEffect(()=> {
       if (!movies) return

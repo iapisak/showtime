@@ -8,6 +8,7 @@ export default function Home () {
     const [ popular, setPopular ] = useState()
     const [ type, setType ] = useState('movie')
     const [ trending, setTrending ] = useState()
+    const [ weekType, setWeekType ] = useState('day')
     const [ selectPopular, setSelectPopular ] = useState() 
     const [ selectTrending, setSelectTrending ] = useState()
     
@@ -16,8 +17,8 @@ export default function Home () {
     }, [type])
 
     useEffect(() => {
-        getTrending(setTrending)
-      }, [])
+        getTrending(setTrending, weekType)
+      }, [weekType])
   
     useEffect(()=> {
       if (!popular) return
@@ -32,27 +33,34 @@ export default function Home () {
       }, [trending])
 
     return  <>
-
-            <div className="home-container p-5 mb-4" 
-                 style={ selectPopular ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectPopular.backdrop }')`} : null }>
-                <div className="col-sm-10 mx-auto py-5">
-                    <h1 className="display-5 fw-bold">{ selectPopular.title }</h1>
-                    <p className="col-md-8 fs-4">{selectPopular.overview }</p>
-                    <button className="btn btn-primary btn-lg" type="button">Example button</button>
+            {
+                selectPopular ?
+                <>
+                <div className="home-container p-5 mb-4" 
+                     style={{ position: 'relative', backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectPopular.backdrop }')`}}>
+                    <div className="col-sm-10 mx-auto py-5">
+                        <h1 className="display-5" style={{ position: 'absolute', bottom: '5px', right: '0'}}>{ type === 'movie' ? 'Movies' : 'TV'}</h1>
+                        <h1 className="display-5">{ selectPopular.title }</h1>
+                        <p className="col-md-8 fs-4">{selectPopular.overview }</p>
+                        <button className="btn btn-primary btn-lg" type="button">Example button</button>
+                    </div>
                 </div>
-            </div>
-            <Template data={ popular } head='Popular' type={ type } setType={ setType } />
+                <Template data={ popular } head='Popular' type={ type } setType={ setType } />
+                </> : null
+            }
+
             { selectTrending ? 
                 <>
                     <div className="home-container p-5 mb-4 rounded-3" 
-                            style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectTrending.backdrop }')`}}>
-                            <div className="col-sm-10 mx-auto py-5">
-                            <h1 className="display-5 fw-bold">{ selectTrending.title }</h1>
+                         style={{ position: 'relative', backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectTrending.backdrop }')`}}>
+                        <div className="col-sm-10 mx-auto py-5">
+                            <h1 className="display-5" style={{ position: 'absolute', bottom: '5px', right: '0'}}>{ weekType === 'day' ? 'Today' : 'This Week' }</h1>
+                            <h1 className="display-5">{ selectTrending.title }</h1>
                             <p className="col-md-8 fs-4">{ selectTrending.overview }</p>
                             <button className="btn btn-primary btn-lg" type="button">Detail</button>
                         </div>
                     </div>
-                    <Template data={ trending } head='Trending' />
+                    <Template data={ trending } head='Trending' type={ weekType } setType={ setWeekType } />
                 </> : null }
             </>
 }

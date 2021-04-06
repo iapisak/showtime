@@ -16,8 +16,8 @@ const getPopular = async (setMovies, type) => {
     return setMovies(results)
 }
 
-const getTrending = async (setTrending) => {
-    const results = await axios.get(`${ url }/trending/all/week?api_key=${ key }`)
+const getTrending = async (setTrending, weekType) => {
+    const results = await axios.get(`${ url }/trending/all/${weekType}?api_key=${ key }`)
     .then(data => data.data.results.map(item => {
                     const { id, poster_path: url, overview, backdrop_path: backdrop, vote_average: vote, media_type } = item
                     if (media_type === 'movie') {
