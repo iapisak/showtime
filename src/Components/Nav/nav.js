@@ -11,7 +11,7 @@ export default function Nav () {
                                 <a className="nav-link" href="/">Home</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/">Movie</a>
+                                <a className="nav-link" href="/movie">Movie</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="/">TV show</a>

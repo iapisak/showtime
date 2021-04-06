@@ -1,25 +1,37 @@
 import './Template.css'
+import moment from 'moment'
 
-export default function Template ({ data, head }) {
+export default function Template ({ data, head, type, setType }) {
 
     return  <div className="col-sm-10 mx-auto">
-                <div className="container-fluid d-flex pl-4">
-                    <h2 className="display-5">{ `What's ${head}` }</h2>
-                    <h2 className="ml-auto">Hi</h2>                  
+                <div className="container-fluid d-flex p-0 pl-4">
+                    <h2 className="display-5">{ type ? type === 'movie' ? `${head} Movies` : `${head} TV` : `${head} this week` }</h2>
+                    { head === 'Popular'    ? <div className="btn-group ml-auto" role="group" aria-label="Basic outlined example">
+                                                <button type="button" className="btn btn-dark" onClick={()=> {
+                                                    if (type === 'movie') return
+                                                    setType('movie')
+                                                    }}>Movies</button>
+                                                <button type="button" className="btn btn-secondary" onClick={()=> {
+                                                    if (type === 'tv') return
+                                                    setType('tv')}}>TV</button>
+                                            </div>
+                                            : null }
                 </div>
                 <div className="item-container d-flex overflow-auto pl-4 py-4">
                     { data ? data.map(item => {
                         const { id, title, url, released } = item
-                        return  <div className="item" key={ id }>
+                        const date = released.replace('/-/g', '')
+                        return  <div className="item" 
+                                     key={ id }>
                                     <img className="" 
-                                        style={{ width: '10rem', borderRadius: '' }}
+                                        style={{ width: '10rem' }}
                                         src= { "https://image.tmdb.org/t/p/w200" + url } 
                                         alt={ title } />
                                     <div>{ title }</div>
-                                    <div>{ released }</div>
+                                    { type || item.media_type === 'movie' ? <div className="text-muted">{ moment(date).fromNow() }</div>
+                                                                          : <div className="text-muted">{ moment(date).format('MMM D, YYYY')}</div> }
                                 </div>
                     }) : null }
                 </div>
             </div>
-            
 }
