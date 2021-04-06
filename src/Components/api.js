@@ -4,7 +4,7 @@ const url = process.env.REACT_APP_API_URL
 const key = process.env.REACT_APP_API_KEY
 
 const getPopular = async (setMovies, type) => {
-    const results = await axios.get(`${ url }/${type}/popular?api_key=${ key }&language=en-US&page=1`)
+    const results = await axios.get(`${ url }/${ type }/popular?api_key=${ key }&language=en-US&page=1`)
     .then(data => data.data.results.map(item => {
                     const { id, poster_path: url, overview, backdrop_path: backdrop, vote_average: vote } = item
                     if (type === 'movie') {
@@ -17,7 +17,7 @@ const getPopular = async (setMovies, type) => {
 }
 
 const getTrending = async (setTrending, weekType) => {
-    const results = await axios.get(`${ url }/trending/all/${weekType}?api_key=${ key }`)
+    const results = await axios.get(`${ url }/trending/all/${ weekType }?api_key=${ key }`)
     .then(data => data.data.results.map(item => {
                     const { id, poster_path: url, overview, backdrop_path: backdrop, vote_average: vote, media_type } = item
                     if (media_type === 'movie') {
@@ -29,4 +29,14 @@ const getTrending = async (setTrending, weekType) => {
     return setTrending(results)
 }
 
-export { getPopular, getTrending }
+const getMovies = async (array, setMovies, selectOption, pages) => {
+    const results = await axios.get(`${ url }/movie/${ selectOption }?api_key=${ key }&language=en-US&page=${ pages }`)
+    .then(data => data.data.results.map(item => {
+                    const { id, title, poster_path: url, overview, release_date: released, backdrop_path: backdrop, vote_average: vote } = item
+                    return { id, title, url, overview, released, backdrop, vote } }))
+    if (!array) return setMovies(results)
+    const newArray = [...array]
+    return setMovies([...newArray, ...results])
+}
+
+export { getPopular, getTrending, getMovies }
