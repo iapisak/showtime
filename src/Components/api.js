@@ -67,4 +67,11 @@ const getCredits = async(id, path, setCredits) => {
     return setCredits(results)
 }
 
-export { getPopular, getTrending, getMovies, getTvs, getReviews, getCredits }
+const getRecommend = async(id, path, setRecommend) => {
+    const results = await axios.get(`${url}/${path}/${id}/similar?api_key=289ceb9c9f5fe2b134e1433ef8599082&language=en-US&page=1`)
+    .then(data => data.data.results)
+    if (!results) return
+    return setRecommend(results)
+}
+
+export { getPopular, getTrending, getMovies, getTvs, getReviews, getCredits, getRecommend }

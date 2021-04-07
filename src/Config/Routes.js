@@ -2,7 +2,7 @@ import { Switch, Route} from 'react-router-dom'
 import Home from '../Components/Home/home'
 import Movie from '../Components/Movie/movie'
 import Tv from '../Components/TV/tv'
-import Info from '../Components/TrackInfo/tranInfo'
+import Info from '../Components/TrackInfo/trackInfo'
 
 export default function Routes ({ loadMovie, loadTv, selectTrack, setSelectTrack }) {
     
