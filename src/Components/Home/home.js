@@ -37,12 +37,11 @@ export default function Home () {
                 selectPopular ?
                 <>
                 <div className="home-container p-5 mb-4" 
-                     style={{ position: 'relative', backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectPopular.backdrop }')`}}>
+                     style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectPopular.backdrop }')`}}>
                     <div className="col-sm-10 mx-auto py-5">
-                        <h1 className="display-5" style={{ position: 'absolute', bottom: '5px', right: '0'}}>{ type === 'movie' ? 'Movies' : 'TV'}</h1>
+                        <h1 className="display-5">Popular on { type === 'movie' ? 'Movies' : 'TV'}</h1>
                         <h1 className="display-5">{ selectPopular.title }</h1>
                         <p className="col-md-8 fs-4">{selectPopular.overview }</p>
-                        <button className="btn btn-primary btn-lg" type="button">Example button</button>
                     </div>
                 </div>
                 <Template data={ popular } head='Popular' type={ type } setType={ setType } />
@@ -51,13 +50,12 @@ export default function Home () {
 
             { selectTrending ? 
                 <>
-                    <div className="home-container p-5 mb-4 rounded-3" 
-                         style={{ position: 'relative', backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectTrending.backdrop }')`}}>
+                    <div className="home-container p-5 mb-4" 
+                         style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectTrending.backdrop }')`}}>
                         <div className="col-sm-10 mx-auto py-5">
-                            <h1 className="display-5" style={{ position: 'absolute', bottom: '5px', right: '0'}}>{ weekType === 'day' ? 'Today' : 'This Week' }</h1>
+                            <h1 className="display-5">Trending { weekType === 'day' ? 'Today' : 'This Week' }</h1>
                             <h1 className="display-5">{ selectTrending.title }</h1>
                             <p className="col-md-8 fs-4">{ selectTrending.overview }</p>
-                            <button className="btn btn-primary btn-lg" type="button">Detail</button>
                         </div>
                     </div>
                     <Template data={ trending } head='Trending' type={ weekType } setType={ setWeekType } />

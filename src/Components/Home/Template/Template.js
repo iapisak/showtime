@@ -30,8 +30,8 @@ export default function Template ({ data, head, type, setType }) {
                         const { id, title, url, released } = item
                         const date = released.replace('/-/g', '')
                         return  <div className="item" key={ id }>
-                                    <img className="mb-1" 
-                                        style={{ width: '10rem' }}
+                                    <img className="mb-1 rounded" 
+                                        style={{ width: '11rem' }}
                                         src= { "https://image.tmdb.org/t/p/w200" + url } 
                                         alt={ title } />
                                     <div>{ title }</div>

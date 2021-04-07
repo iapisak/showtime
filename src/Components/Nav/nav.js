@@ -1,4 +1,4 @@
-export default function Nav ({ setLoadMovie }) {
+export default function Nav ({ setLoadMovie, setLoadTv }) {
     return  <nav className="navbar navbar-expand-md navbar-dark" aria-label="Twelfth navbar example">
                 <div className="container-fluid">
                     <div className="lead">Movie</div>
@@ -13,7 +13,7 @@ export default function Nav ({ setLoadMovie }) {
                             <li className="" onClick={() => setLoadMovie(true)}>
                                 <a className="" href="#movie" data-toggle="tab">Movie</a>
                             </li>
-                            <li className="">
+                            <li className="" onClick={() => setLoadTv(true)}>
                                 <a className="" href="#tv" data-toggle="tab">TV</a>
                             </li>
                         </ul>
