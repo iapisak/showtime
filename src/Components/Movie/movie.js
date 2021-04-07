@@ -75,6 +75,7 @@ export default function Movie ({ loadMovie, setSelectTrack }) {
                 <div className="poster-container py-4">
                     { movies.length ? movies.map(item => {
                         const { id, title, url, released } = item
+                        item.path = 'movie'
                         const date = released.replace('/-/g', '')
                         return  <Link className="poster flex-shrink-0 mr-3 mb-md-3 " key={ id + '-movie' } to={ '/track-info' } 
                                       onClick={()=> { setSelectTrack(item) }}>

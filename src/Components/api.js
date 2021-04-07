@@ -53,12 +53,18 @@ const getTvs = async (array, setTvs, selectOption, pages) => {
     setTvs([...newArray, ...results])
 }
 
-const getReviews = async(id, setReviews)=> {
-    const results = await axios.get(`${ url }/movie/${ id }/reviews?api_key=${key}&language=en-US&page=1)`)
+const getReviews = async(id, path, setReviews)=> {
+    const results = await axios.get(`${ url }/${ path }/${ id }/reviews?api_key=${key}&language=en-US&page=1)`)
     .then(data => data.data.results)
-
     if (!results) return
     return setReviews(results)
 }
 
-export { getPopular, getTrending, getMovies, getTvs, getReviews }
+const getCredits = async(id, path, setCredits) => {
+    const results = await axios.get(`${ url }/${ path }/${ id }/credits?api_key=289ceb9c9f5fe2b134e1433ef8599082&language=en-US`)
+    .then(data => data.data.cast)
+    if (!results) return
+    return setCredits(results)
+}
+
+export { getPopular, getTrending, getMovies, getTvs, getReviews, getCredits }

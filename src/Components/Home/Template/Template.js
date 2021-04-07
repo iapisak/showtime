@@ -3,7 +3,6 @@ import moment from 'moment'
 import './Template.css'
 
 export default function Template ({ data, head, type, setType, setSelectTrack }) {
-
     return  <div className="col-sm-10 mx-auto">
                 <div className="container-fluid d-flex p-0 pl-md-4">
                     <h2 className="display-5">{ head }</h2>
@@ -29,6 +28,7 @@ export default function Template ({ data, head, type, setType, setSelectTrack })
                 <div className="item-container d-flex overflow-auto pl-2 pl-md-4 py-4">
                     { data ? data.map(item => {
                         const { id, title, url, released } = item
+                        item.path = item.media_type ? item.media_type : type
                         const date = released.replace('/-/g', '')
                         return  <Link className="item" key={ id } to={ '/track-info' } onClick={()=> { setSelectTrack(item) }}>
                                     <img className="mb-1 rounded" 

@@ -75,6 +75,7 @@ export default function TV ({ loadTv, setSelectTrack }) {
                 <div className="poster-container py-4">
                     { tvs.length ? tvs.map(item => {
                         const { id, title, url, released } = item
+                        item.path = 'tv'
                         const date = released.replace('/-/g', '')
                         return  <Link className="poster flex-shrink-0 mr-3 mb-md-3 " key={ id + '-tv' } to={ '/track-info' } 
                                       onClick={()=> { setSelectTrack(item) }}>
