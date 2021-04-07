@@ -16,23 +16,15 @@ export default function Movie ({ loadMovie }) {
 
     useEffect(()=> {
         if (!loadMovie) return
-        const loading = async () => {
-            const initial = { option: 'now_playing', page: '1'}
-            const getData = await getMovies(initial.option, initial.page)
-            setMovies(getData)
-        }
-        loading()
-    }, [loadMovie])
-    
-    useEffect(()=> {
-        if (pages === 1) return
-        const loadMore = async () => {
-            const getData = await getMovies(selectOption, pages)
-            const newArray = [...movies]
-            setMovies([...newArray, ...getData])
-        }
-        loadMore()
-    }, [pages])
+        const initial = { array: [], option: 'now_playing', page: '1'}
+        getMovies(initial.array, setMovies, initial.option, initial.page)
+        }, [loadMovie])
+        
+    useEffect(() => {
+        if (!loadMovie) return
+        const array = [...movies]
+        getMovies(array, setMovies, selectOption, pages)
+    }, [loadMovie, selectOption, pages])
 
     useEffect(()=> {
       if (!movies) return
@@ -64,12 +56,6 @@ export default function Movie ({ loadMovie }) {
                                     setMovies([])
                                     setPages(1)
                                     setSelectOption(options[key])
-                                    const reloading = async () => {
-                                        const getData = await getMovies(selectOption, pages)
-                                        setMovies(getData)
-                                    }
-                                    reloading()
-                                    return
                                 }}>{ key }</button>
                             ))
                         }
@@ -87,11 +73,10 @@ export default function Movie ({ loadMovie }) {
                                     <div className="text-muted">{ moment(date).fromNow() }</div>
                                 </div>
                     }) : null }
-                    <button className="btn btn-primary btn-lg" type="button"
-                            onClick={() => {
-                                if (pages >= 4) return
-                                setPages(pages+1)
-                            }}> Load More</button>
+                    { pages <= 3 
+                        ? <button className="btn btn-primary btn-lg" type="button" onClick={() => setPages(pages+1) }> Load More</button>
+                        : null
+                    }
                 </div>
             </div>
             </div>
