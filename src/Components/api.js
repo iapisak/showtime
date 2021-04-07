@@ -42,7 +42,6 @@ const getMovies = async (array, setMovies, selectOption, pages) => {
 }
 
 const getTvs = async (array, setTvs, selectOption, pages) => {
-    // https://api.themoviedb.org/3/tv/airing_today?api_key=289ceb9c9f5fe2b134e1433ef8599082&language=en-US&page=1
     const results = await axios.get(`${ url }/tv/${ selectOption }?api_key=${ key }&language=en-US&page=${ pages }`)
     .then(data => data.data.results.map(item => {
                     const { id, original_name: title, poster_path: url, overview, first_air_date: released, backdrop_path: backdrop, vote_average: vote } = item
@@ -54,6 +53,12 @@ const getTvs = async (array, setTvs, selectOption, pages) => {
     setTvs([...newArray, ...results])
 }
 
+const getReviews = async(id, setReviews)=> {
+    const results = await axios.get(`${ url }/movie/${ id }/reviews?api_key=${key}&language=en-US&page=1)`)
+    .then(data => data.data.results)
 
+    if (!results) return
+    return setReviews(results)
+}
 
-export { getPopular, getTrending, getMovies, getTvs }
+export { getPopular, getTrending, getMovies, getTvs, getReviews }

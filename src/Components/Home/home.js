@@ -4,7 +4,7 @@ import Template from './Template/Template'
 
 import './home.css'
 
-export default function Home () {
+export default function Home ({ setSelectTrack }) {
     const [ popular, setPopular ] = useState()
     const [ type, setType ] = useState('movie')
     const [ trending, setTrending ] = useState()
@@ -17,8 +17,8 @@ export default function Home () {
     }, [type])
 
     useEffect(() => {
-        getTrending(setTrending, weekType)
-      }, [weekType])
+      getTrending(setTrending, weekType)
+    }, [weekType])
   
     useEffect(()=> {
       if (!popular) return
@@ -32,7 +32,7 @@ export default function Home () {
         setSelectTrending(trending[random])
       }, [trending])
 
-    return  <div className="tab-pane active" id="home">
+    return  <div id="home">
             {
                 selectPopular ?
                 <>
@@ -44,21 +44,23 @@ export default function Home () {
                         <p className="col-md-8 fs-4">{selectPopular.overview }</p>
                     </div>
                 </div>
-                <Template data={ popular } head='Popular' type={ type } setType={ setType } />
+                <Template data={ popular } head='Popular' type={ type } 
+                          setType={ setType } setSelectTrack={ setSelectTrack } />
                 </> : null
             }
 
             { selectTrending ? 
                 <>
-                    <div className="home-container p-5 mb-4" 
-                         style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectTrending.backdrop }')`}}>
-                        <div className="col-sm-10 mx-auto py-5">
-                            <h1 className="display-5">Trending { weekType === 'day' ? 'Today' : 'This Week' }</h1>
-                            <h1 className="display-5">{ selectTrending.title }</h1>
-                            <p className="col-md-8 fs-4">{ selectTrending.overview }</p>
-                        </div>
+                <div className="home-container p-5 mb-4" 
+                      style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectTrending.backdrop }')`}}>
+                    <div className="col-sm-10 mx-auto py-5">
+                        <h1 className="display-5">Trending { weekType === 'day' ? 'Today' : 'This Week' }</h1>
+                        <h1 className="display-5">{ selectTrending.title }</h1>
+                        <p className="col-md-8 fs-4">{ selectTrending.overview }</p>
                     </div>
-                    <Template data={ trending } head='Trending' type={ weekType } setType={ setWeekType } />
+                </div>
+                <Template data={ trending } head='Trending' type={ weekType } 
+                          setType={ setWeekType } setSelectTrack={ setSelectTrack } />
                 </> : null }
             </div>
 }

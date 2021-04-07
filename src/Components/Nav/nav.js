@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export default function Nav ({ setLoadMovie, setLoadTv }) {
     return  <nav className="navbar navbar-expand-md navbar-dark" aria-label="Twelfth navbar example">
                 <div className="container-fluid">
@@ -6,15 +8,15 @@ export default function Nav ({ setLoadMovie, setLoadTv }) {
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse justify-content-md-end" id="navbarsExample10">
-                        <ul className="nav nav-tabs">
-                            <li className="">
-                                <a className="" href="#home" data-toggle="tab">Home</a>
+                        <ul className="nav navbar-nav">
+                            <li className="nav-link">
+                                <Link className='nav-link' to={'/'}>Home</Link>
                             </li>
-                            <li className="" onClick={() => setLoadMovie(true)}>
-                                <a className="" href="#movie" data-toggle="tab">Movie</a>
+                            <li className="nav-link" >
+                                <Link className='nav-link' to={'/movie'} onClick={() => { setLoadMovie(true) }} >Movie</Link>
                             </li>
-                            <li className="" onClick={() => setLoadTv(true)}>
-                                <a className="" href="#tv" data-toggle="tab">TV</a>
+                            <li className="nav-link" onClick={() => { setLoadTv(true) }}>
+                                <Link className='nav-link' to={'/tv'} onClick={() => { setLoadMovie(true) }} >Tv</Link>
                             </li>
                         </ul>
                     </div>

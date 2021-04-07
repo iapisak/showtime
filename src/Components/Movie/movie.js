@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { getMovies } from '../api'
 import moment from 'moment'
 
-export default function Movie ({ loadMovie }) {
+export default function Movie ({ loadMovie, setSelectTrack }) {
     const options = { 
         'Playing': 'now_playing',
         'Popular': 'popular',
@@ -32,7 +33,7 @@ export default function Movie ({ loadMovie }) {
       setSelectMovie(movies[random])
     }, [movies])
 
-    return  <div className="tab-pane" id="movie">
+    return  <div id="movie">
             {   
                 selectMovie ? 
                 <div className="header-container mb-4 row" 
@@ -75,11 +76,12 @@ export default function Movie ({ loadMovie }) {
                     { movies.length ? movies.map(item => {
                         const { id, title, url, released } = item
                         const date = released.replace('/-/g', '')
-                        return  <div className="poster flex-shrink-0 mr-3 mb-md-3 " key={ id + '-movie' }>
+                        return  <Link className="poster flex-shrink-0 mr-3 mb-md-3 " key={ id + '-movie' } to={ '/track-info' } 
+                                      onClick={()=> { setSelectTrack(item) }}>
                                     <img className="mb-1 img-fluid rounded" src= { "https://image.tmdb.org/t/p/w200" + url } alt={ title } />
                                     <div>{ title }</div>
                                     <div className="text-muted">{ moment(date).fromNow() }</div>
-                                </div>
+                                </Link>
                     }) : null }
                     { pages <= 3 
                         ? 

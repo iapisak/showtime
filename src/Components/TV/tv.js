@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { getTvs } from '../api'
 import moment from 'moment'
 
-export default function TV ({ loadTv }) {
+export default function TV ({ loadTv, setSelectTrack }) {
     const options = { 
         'On Air Today': 'airing_today',
         'On Air': 'on_the_air',
@@ -32,7 +33,7 @@ export default function TV ({ loadTv }) {
       setSelectTvs(tvs[random])
     }, [tvs])
 
-    return  <div className="tab-pane" id="tv">
+    return  <div id="tv">
             {   
                 selectTvs ? 
                 <div className="header-container mb-4 row" 
@@ -75,11 +76,12 @@ export default function TV ({ loadTv }) {
                     { tvs.length ? tvs.map(item => {
                         const { id, title, url, released } = item
                         const date = released.replace('/-/g', '')
-                        return  <div className="poster flex-shrink-0 mr-3 mb-md-3 " key={ id + '-tv' }>
+                        return  <Link className="poster flex-shrink-0 mr-3 mb-md-3 " key={ id + '-tv' } to={ '/track-info' } 
+                                      onClick={()=> { setSelectTrack(item) }}>
                                     <img className="mb-1 img-fluid rounded" src= { "https://image.tmdb.org/t/p/w200" + url } alt={ title } />
                                     <div>{ title }</div>
                                     <div className="text-muted">{ moment(date).fromNow() }</div>
-                                </div>
+                                </Link>
                     }) : null }
                     { pages <= 3 
                         ? 

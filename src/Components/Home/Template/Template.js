@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom'
 import moment from 'moment'
 import './Template.css'
 
-export default function Template ({ data, head, type, setType }) {
+export default function Template ({ data, head, type, setType, setSelectTrack }) {
 
     return  <div className="col-sm-10 mx-auto">
                 <div className="container-fluid d-flex p-0 pl-md-4">
@@ -29,7 +30,7 @@ export default function Template ({ data, head, type, setType }) {
                     { data ? data.map(item => {
                         const { id, title, url, released } = item
                         const date = released.replace('/-/g', '')
-                        return  <div className="item" key={ id }>
+                        return  <Link className="item" key={ id } to={ '/track-info' } onClick={()=> { setSelectTrack(item) }}>
                                     <img className="mb-1 rounded" 
                                         style={{ width: '11rem' }}
                                         src= { "https://image.tmdb.org/t/p/w200" + url } 
@@ -37,7 +38,7 @@ export default function Template ({ data, head, type, setType }) {
                                     <div>{ title }</div>
                                     { type || item.media_type === 'movie' ? <div className="text-muted">{ moment(date).fromNow() }</div>
                                                                           : <div className="text-muted">{ moment(date).format('MMM D, YYYY')}</div> }
-                                </div>
+                                </Link>
                     }) : null }
                 </div>
             </div>
