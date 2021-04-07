@@ -32,7 +32,7 @@ export default function Home () {
         setSelectTrending(trending[random])
       }, [trending])
 
-    return  <>
+    return  <div className="tab-pane active" id="home">
             {
                 selectPopular ?
                 <>
@@ -62,5 +62,5 @@ export default function Home () {
                     </div>
                     <Template data={ trending } head='Trending' type={ weekType } setType={ setWeekType } />
                 </> : null }
-            </>
+            </div>
 }

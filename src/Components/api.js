@@ -29,14 +29,12 @@ const getTrending = async (setTrending, weekType) => {
     return setTrending(results)
 }
 
-const getMovies = async (array, setMovies, selectOption, pages) => {
+const getMovies = async (selectOption, pages) => {
     const results = await axios.get(`${ url }/movie/${ selectOption }?api_key=${ key }&language=en-US&page=${ pages }`)
     .then(data => data.data.results.map(item => {
                     const { id, title, poster_path: url, overview, release_date: released, backdrop_path: backdrop, vote_average: vote } = item
                     return { id, title, url, overview, released, backdrop, vote } }))
-    if (!array) return setMovies(results)
-    const newArray = [...array]
-    return setMovies([...newArray, ...results])
+    return results
 }
 
 export { getPopular, getTrending, getMovies }

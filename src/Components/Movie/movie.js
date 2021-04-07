@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { getMovies } from '../api'
 import moment from 'moment'
 
-export default function Home () {
+export default function Movie ({ loadMovie }) {
     const options = { 
         'Playing': 'now_playing',
         'Popular': 'popular',
@@ -13,12 +13,26 @@ export default function Home () {
     const [ selectMovie, setSelectMovie ] = useState()
     const [ selectOption, setSelectOption ] = useState(options.Playing)
     const [ pages, setPages ] = useState(1)
+
+    useEffect(()=> {
+        if (!loadMovie) return
+        const loading = async () => {
+            const initial = { option: 'now_playing', page: '1'}
+            const getData = await getMovies(initial.option, initial.page)
+            setMovies(getData)
+        }
+        loading()
+    }, [loadMovie])
     
-    useEffect(() => {
-        if (pages > 5) return
-        const array = [...movies]
-        getMovies(array, setMovies, selectOption, pages)
-    }, [selectOption, pages])
+    useEffect(()=> {
+        if (pages === 1) return
+        const loadMore = async () => {
+            const getData = await getMovies(selectOption, pages)
+            const newArray = [...movies]
+            setMovies([...newArray, ...getData])
+        }
+        loadMore()
+    }, [pages])
 
     useEffect(()=> {
       if (!movies) return
@@ -26,7 +40,7 @@ export default function Home () {
       setSelectMovie(movies[random])
     }, [movies])
 
-    return  <>
+    return  <div className="tab-pane" id="movie">
             {
                 selectMovie ? 
                 <div className="home-container p-5 mb-4" 
@@ -47,19 +61,25 @@ export default function Home () {
                             Object.keys(options).map(key=> (
                                 <button key={key} type="button" className="btn btn-dark" onClick={()=> {
                                     if (options[key] === selectOption) return
-                                    setPages(1)
                                     setMovies([])
+                                    setPages(1)
                                     setSelectOption(options[key])
+                                    const reloading = async () => {
+                                        const getData = await getMovies(selectOption, pages)
+                                        setMovies(getData)
+                                    }
+                                    reloading()
+                                    return
                                 }}>{ key }</button>
                             ))
                         }
                     </div>
                 </div>
                 <div className="d-flex flex-wrap pl-4 py-4">
-                    { movies ? movies.map(item => {
+                    { movies.length ? movies.map(item => {
                         const { id, title, url, released } = item
                         const date = released.replace('/-/g', '')
-                        return  <div className="mr-3" key={ id } style={{ width: '200px' }}>
+                        return  <div className="mr-3" key={ id + '-movie' } style={{ width: '200px' }}>
                                     <img className="mb-1" 
                                         src= { "https://image.tmdb.org/t/p/w200" + url } 
                                         alt={ title } />
@@ -68,8 +88,11 @@ export default function Home () {
                                 </div>
                     }) : null }
                     <button className="btn btn-primary btn-lg" type="button"
-                            onClick={() => setPages(pages+1) }> Load More</button>
+                            onClick={() => {
+                                if (pages >= 4) return
+                                setPages(pages+1)
+                            }}> Load More</button>
                 </div>
             </div>
-            </>
+            </div>
 }
