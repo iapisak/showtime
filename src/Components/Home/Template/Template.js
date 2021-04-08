@@ -1,43 +1,38 @@
 import { Link } from 'react-router-dom'
 import moment from 'moment'
-import './Template.css'
 
-export default function Template ({ data, head, type, setType, setSelectTrack }) {
-    return  <div className="col-sm-10 mx-auto">
-                <div className="container-fluid d-flex p-0 pl-md-4">
+export default function Template ({ data, head, options, setOptions, setSelectTrack }) {
+    return  <div className="col-sm-10 mx-auto p-0">
+                <div className="container-fluid d-flex pl-md-4">
                     <h2 className="display-5">{ head }</h2>
                     { head === 'Popular'    ? <div className="btn-group btn-group-toggle ml-auto" data-toggle="buttons">
                                                 <button type="button" className="btn shadow-none btn-dark" onClick={()=> {
-                                                    if (type === 'movie') return
-                                                    setType('movie')
+                                                    if (options === 'movie') return
+                                                        setOptions('movie')
                                                     }}>Movies</button>
                                                 <button type="button" className="btn shadow-none btn-dark" onClick={()=> {
-                                                    if (type === 'tv') return
-                                                    setType('tv')}}>TV</button>
+                                                    if (options === 'tv') return
+                                                    setOptions('tv')}}>TV</button>
                                               </div>
-                                            : <div className="btn-group ml-auto" role="group" aria-label="Basic outlined example">
-                                                <button type="button" className="btn shadow-none btn-primary" onClick={()=> {
-                                                    if (type === 'day') return
-                                                    setType('day')
+                                            : <div className="btn-group btn-group-toggle ml-auto" data-toggle="buttons">
+                                                <button type="button" className="btn shadow-none btn-dark" onClick={()=> {
+                                                    if (options === 'day') return
+                                                    setOptions('day')
                                                     }}>Today</button>
-                                                <button type="button" className="btn shadow-none btn-secondary" onClick={()=> {
-                                                    if (type === 'week') return
-                                                    setType('week')}}>Week</button>
+                                                <button type="button" className="btn shadow-none btn-dark" onClick={()=> {
+                                                    if (options === 'week') return
+                                                    setOptions('week')}}>Week</button>
                                             </div> }
                 </div>
                 <div className="item-container d-flex overflow-auto pl-2 pl-md-4 py-4">
                     { data ? data.map(item => {
                         let { id, title, url, released } = item
-                        item.path = item.media_type ? item.media_type : type
-                        let date = released ? released.replace('/-/g', '') : ''
-                        return  <Link className="item" key={ id } to={ '/track-info' } onClick={()=> { setSelectTrack(item) }}>
-                                    <img className="mb-1 rounded" 
-                                        style={{ width: '11rem' }}
-                                        src= { url } 
-                                        alt={ title } />
+                        item.path = item.media_type ? item.media_type : options
+                        return  <Link className="item poster flex-shrink-0" key={ id } to={ '/track-info' } onClick={()=> { setSelectTrack(item) }}>
+                                    <img className="mb-1 img-fluid rounded" src= { url } alt={ title } />
                                     <div>{ title }</div>
-                                    { type || item.media_type === 'movie' ? <div className="text-muted">{ moment(date).fromNow() }</div>
-                                                                          : <div className="text-muted">{ moment(date).format('MMM D, YYYY')}</div> }
+                                    { options || item.media_type === 'movie' ? <div className="text-muted">{ moment(released).fromNow() }</div>
+                                                                             : <div className="text-muted">{ moment(released).format('MMM D, YYYY')}</div> }
                                 </Link>
                     }) : null }
                 </div>

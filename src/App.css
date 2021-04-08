@@ -1,9 +1,53 @@
+a {
+  color: whitesmoke;
+}
+
+a:hover {
+  color: whitesmoke;
+}
+
+a:link {
+  text-decoration: none;
+}
+
 .header-container {
   height: 50vh;
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
-  overflow-y: auto;
+}
+
+.home-container {
+  display: flex;
+  align-items: center;
+  height: 50vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.item {
+  cursor: pointer;
+  padding-right: 15px;
+  transition: transform 300ms ease 100ms;
+}
+
+.item-container:hover .item {
+  transform: translateX(-8%);
+}
+
+.item:hover ~ .item {
+  transform: translateX(8%);
+}
+
+.item:hover {
+  transform: scale(1.05) !important;
+}
+
+.text-container {
+  height: 10vh;
+  overflow-Y: auto;
+  padding: 10px 0;
 }
 
 .poster-container {
@@ -13,7 +57,8 @@
 }
 
 .poster {
-  cursor: pointer;
+  text-decoration: none;
+  /* cursor: pointer; */
   width: 10rem;
   height: auto;
   transition: all .2s ease-in-out;
@@ -21,6 +66,40 @@
 
 .poster:hover {
   transform: scale(1.04)
+}
+
+.search-bar {
+  display: flex;
+  margin-top: 30px;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 16px 32px, rgba(0, 0, 0, 0.1) 0px 3px 8px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 50px;
+}
+
+.search-group {
+  padding: 14px 32px;
+  padding-right: 0;
+  flex: 1;
+}
+
+.search-input {
+  width: 100%;
+  font-weight: 400;
+  outline: none;
+  border: none;
+}
+
+.search-button {
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  height: 48px;
+  width: 48px;
+  border: none;
+  margin: 7px 8px;
+  border-radius: 50px;
+  outline: none !important;
 }
 
 @media (min-width: 992px) {  

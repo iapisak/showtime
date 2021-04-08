@@ -37,7 +37,6 @@ export default function TV ({ loadTv, setSelectTrack }) {
     useEffect(()=> {
         if (!search) return setSearchTvs([])
         getSearchTv(search, setSearchTvs)
-        console.log(searchTvs)
     }, [search])
 
     useEffect(()=> {
@@ -50,19 +49,27 @@ export default function TV ({ loadTv, setSelectTrack }) {
             { selectTvs ? 
                 <div className="header-container mb-4 row" 
                         style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectTvs.backdrop }')`}}>
-                    <div className="col-sm-10 mx-auto p-3 p-md-0">
-                        <div className="d-flex pt-3 pl-3 pl-md-5">
+                    <div className="col-sm-10 mx-auto p-3">
+                        <div className="d-flex">
                             <img className="d-none d-md-block shadow-sm border" src= { selectTvs.url } alt={ selectTvs.title } 
                                     style={{ width: '250px', height: '350px', borderRadius: '30px' }}  />
-                            <div className="card-body d-flex flex-column">
+                            <div className="card-body p-0 pl-md-4">
+                                <h1 className="display-6 font-weight-bold m-0">{ Object.keys(options).find(key => options[key] === selectOption) } Tvs</h1>
                                 <h1 className="display-5">{ selectTvs.title }</h1>
-                                <p className="col col-md-10 pl-3">
-                                    {selectTvs.overview } <br /><br />
-                                    Released on { moment(selectTvs.released.replace('/-/g', '')).format('MMM D, YYYY') } ({ moment(selectTvs.released.replace('/-/g', '')).fromNow() }) 
-                                    <br />
-                                    Voted { selectTvs.vote }
-                                </p>
-                                <input type='search' value={ search } onChange={(e)=> setSearch(e.target.value)}/>
+                                <div className="text-container">
+                                    <p className="col col-md-10 p-0">{ selectTvs.overview }</p>
+                                </div>
+                                <p className="p-0 mt-2">Released on { moment(selectTvs.released).format('MMM D, YYYY') } - { moment(selectTvs.released).fromNow() } 
+                                   <br />Voted { selectTvs.vote }</p>
+                                <div className="search-bar col col-md-8 p-0">
+                                    <div className="search-group">
+                                        <input className="search-input" value={ search } onChange={(e)=> setSearch(e.target.value)}
+                                                placeholder="Search for movies"/>
+                                    </div>
+                                    <button className="search-button btn-primary disabled">
+                                        <i className="fa fa-search text-grey"aria-hidden="true"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -73,31 +80,34 @@ export default function TV ({ loadTv, setSelectTrack }) {
                 <div className="col-sm-10 mx-auto p-3 p-md-0">
                     <div className="container-fluid d-md-flex p-0 justify-content-md-center">
                         <h2 className="display-5 mb-3 mb-md-0">TV Shows</h2>
-                        <div className="btn-group ml-md-4" role="group" aria-label="Basic outlined example">
-                            { Object.keys(options).map(key=> (
-                                <button key={key} type="button" className="btn btn-dark" onClick={()=> {
-                                    if (options[key] === selectOption) return
-                                    setSelectOption(options[key]) }}>{ key }</button> )) }
+                        <div className="btn-group ml-md-4 btn-group-toggle" data-toggle="buttons">
+                            { Object.keys(options).map((key, index)=> {
+                                    return  <label key={key} className={ index === 0 ? "btn btn-dark shadow-none active" : "btn btn-dark shadow-none" }
+                                                  onClick={()=> { if (options[key] === selectOption) return
+                                                                setSelectOption(options[key]) }}>
+                                                <input type="radio" name={key} id={key} autoComplete="off"/>{key}
+                                            </label>
+                            })}
                         </div>
                     </div>
                     <div className="poster-container py-4">
                         { tvs.length ? tvs.map(item => {
                             const { id, title, url, released } = item
                             item.path = 'tv'
-                            const date = released ? released.replace('/-/g', '') : ''
-                            return  <Link className="poster flex-shrink-0 mr-3 mb-md-3 " key={ id + '-tv' } to={ '/track-info' } 
+                            return  <Link className="poster flex-shrink-0 pr-3 pb-md-3 " key={ id + '-tv' } to={ '/track-info' } 
                                         onClick={()=> { setSelectTrack(item) }}>
                                         <img className="mb-1 img-fluid rounded" src= { url } alt={ title } />
                                         <div>{ title }</div>
-                                        <div className="text-muted">{ moment(date).fromNow() }</div>
+                                        <div className="text-muted">{ moment(released).fromNow() }</div>
                                     </Link>
                         }) : null }
-                        { pages <= 3 ? 
-                            <div className="poster flex-shrink-0 mr-3 mb-md-3 row ml-0">
-                                <button className="btn px-4 btn-primary my-auto" type="button" 
-                                        style={{ borderRadius: '30px'}}
-                                        onClick={() => { setPages(pages+1); setLoad(!load) }}>+ More TVs</button>
-                            </div> : null }
+                        { pages < 3 ? 
+                                <div className="poster flex-shrink-0 ml-0 d-flex flex-column">
+                                    <button className="btn px-4 btn-primary my-auto mx-auto" type="button" 
+                                            style={{ borderRadius: '30px'}}
+                                            onClick={() => { setPages(pages+1); setLoad(!load) }}>+ More Movies</button>
+                                </div>
+                            : null } 
                     </div>
                 </div>
                 }

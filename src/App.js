@@ -10,16 +10,12 @@ export default withRouter(function App() {
   const [ selectTrack, setSelectTrack ] = useState()
 
   return  <div className="d-flex flex-column text-light" style={{ backgroundColor: '#212529', height: '100vh'}}>
-            <div>
-              <div className="col-sm-10 mx-auto">
-                <Nav setLoadMovie={ setLoadMovie } setLoadTv={ setLoadTv }/>
-              </div>
-            </div>
-            <main className='flex-grow-1' style={{ overflow: 'scroll' }} >
+            <Nav setLoadMovie={ setLoadMovie } setLoadTv={ setLoadTv }/>
+            <main className='container-fluid p-0' style={{ overflow: 'scroll' }} >
               <Routes loadMovie={ loadMovie } loadTv={ loadTv } selectTrack={ selectTrack } setSelectTrack={ setSelectTrack }/>
             </main>
-            <footer className="mt-auto text-white-50 text-center">
-                <p>Cover template for <a href="https://getbootstrap.com/" className="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" className="text-white">@mdo</a>.</p>
+            <footer className="py-3 text-white-50 text-center">
+                <p className="m-0">Data base from <span className="text-white">TMP</span>, project By <span className="text-white">@Jun</span>.</p>
             </footer>
           </div>
 })
