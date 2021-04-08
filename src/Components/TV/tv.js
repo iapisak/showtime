@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { getTvs } from '../api'
+import { getTvs, loadMoreTvs } from '../api'
 import moment from 'moment'
 
 export default function TV ({ loadTv, setSelectTrack }) {
@@ -14,18 +14,21 @@ export default function TV ({ loadTv, setSelectTrack }) {
     const [ selectTvs, setSelectTvs ] = useState()
     const [ selectOption, setSelectOption ] = useState(options['On Air Today'])
     const [ pages, setPages ] = useState(1)
+    const [ load, setLoad ] = useState(false)
     
     useEffect(()=> {
         if (!loadTv) return
-        const initial = { array: [], option: 'airing_today', page: '1'}
-        getTvs(initial.array, setTvs, initial.option, initial.page)
-        }, [loadTv])
-        
-    useEffect(() => {
-        if (!loadTv) return
-        const array = [...tvs]
-        getTvs(array, setTvs, selectOption, pages)
-    }, [loadTv, selectOption, pages])
+        setTvs([])
+        setPages(1)
+        getTvs(setTvs, selectOption)
+    }, [loadTv, selectOption])
+    
+    useEffect(()=> {
+        if (!load) return
+        if (pages > 3) return
+        loadMoreTvs(setTvs, selectOption, pages, tvs)
+        setLoad(false)
+    }, [load, pages, tvs, selectOption])
 
     useEffect(()=> {
       if (!tvs) return
@@ -60,16 +63,10 @@ export default function TV ({ loadTv, setSelectTrack }) {
                 <div className="container-fluid d-md-flex p-0 justify-content-md-center">
                     <h2 className="display-5 mb-3 mb-md-0">TV Shows</h2>
                     <div className="btn-group ml-md-4" role="group" aria-label="Basic outlined example">
-                        {
-                            Object.keys(options).map(key=> (
-                                <button key={key} type="button" className="btn btn-dark" onClick={()=> {
-                                    if (options[key] === selectOption) return
-                                    setTvs([])
-                                    setPages(1)
-                                    setSelectOption(options[key])
-                                }}>{ key }</button>
-                            ))
-                        }
+                        { Object.keys(options).map(key=> (
+                            <button key={key} type="button" className="btn btn-dark" onClick={()=> {
+                                if (options[key] === selectOption) return
+                                setSelectOption(options[key]) }}>{ key }</button> )) }
                     </div>
                 </div>
                 <div className="poster-container py-4">
@@ -84,15 +81,12 @@ export default function TV ({ loadTv, setSelectTrack }) {
                                     <div className="text-muted">{ moment(date).fromNow() }</div>
                                 </Link>
                     }) : null }
-                    { pages <= 3 
-                        ? 
+                    { pages <= 3 ? 
                         <div className="poster flex-shrink-0 mr-3 mb-md-3 row ml-0">
                             <button className="btn px-4 btn-primary my-auto" type="button" 
                                     style={{ borderRadius: '30px'}}
-                                    onClick={() => setPages(pages+1) }>+ More TVs</button>
-                        </div>
-                        : null
-                    }
+                                    onClick={() => { setPages(pages+1); setLoad(!load) }}>+ More TVs</button>
+                        </div> : null }
                 </div>
             </div>
             </div>

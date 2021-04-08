@@ -6,7 +6,7 @@ export default function TrackInfo ({ selectTrack }) {
     const [ reviews, setReviews ] = useState()
     const [ credits, setCredits ] = useState()
     const [ recommend, setRecommend ] = useState()
-    console.log(recommend)
+    
     useEffect(()=> {
         if (!selectTrack) return
         getReviews(selectTrack.id, selectTrack.path, setReviews)

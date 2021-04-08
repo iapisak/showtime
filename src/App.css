@@ -1,6 +1,6 @@
 .header-container {
   height: 50vh;
-  background-repeat: none;
+  background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
   overflow-y: auto;

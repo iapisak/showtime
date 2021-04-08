@@ -6,21 +6,21 @@ export default function Template ({ data, head, type, setType, setSelectTrack })
     return  <div className="col-sm-10 mx-auto">
                 <div className="container-fluid d-flex p-0 pl-md-4">
                     <h2 className="display-5">{ head }</h2>
-                    { head === 'Popular'    ? <div className="btn-group ml-auto" role="group" aria-label="Basic outlined example">
-                                                <button type="button" className="btn btn-dark" onClick={()=> {
+                    { head === 'Popular'    ? <div className="btn-group btn-group-toggle ml-auto" data-toggle="buttons">
+                                                <button type="button" className="btn shadow-none btn-dark" onClick={()=> {
                                                     if (type === 'movie') return
                                                     setType('movie')
                                                     }}>Movies</button>
-                                                <button type="button" className="btn btn-secondary" onClick={()=> {
+                                                <button type="button" className="btn shadow-none btn-dark" onClick={()=> {
                                                     if (type === 'tv') return
                                                     setType('tv')}}>TV</button>
                                               </div>
                                             : <div className="btn-group ml-auto" role="group" aria-label="Basic outlined example">
-                                                <button type="button" className="btn btn-dark" onClick={()=> {
+                                                <button type="button" className="btn shadow-none btn-primary" onClick={()=> {
                                                     if (type === 'day') return
                                                     setType('day')
                                                     }}>Today</button>
-                                                <button type="button" className="btn btn-secondary" onClick={()=> {
+                                                <button type="button" className="btn shadow-none btn-secondary" onClick={()=> {
                                                     if (type === 'week') return
                                                     setType('week')}}>Week</button>
                                             </div> }

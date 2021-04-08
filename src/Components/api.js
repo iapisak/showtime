@@ -3,55 +3,99 @@ import axios from 'axios'
 const url = process.env.REACT_APP_API_URL
 const key = process.env.REACT_APP_API_KEY
 
-const getPopular = async (setMovies, type) => {
-    const results = await axios.get(`${ url }/${ type }/popular?api_key=${ key }&language=en-US&page=1`)
-    .then(data => data.data.results.map(item => {
-                    const { id, poster_path: url, overview, backdrop_path: backdrop, vote_average: vote } = item
+const getPopular = (setMovies, type) => {
+    axios.get(`${ url }/${ type }/popular?api_key=${ key }&language=en-US&page=1`)
+        .then(async data => {
+            const results = await data.data.results.map(item=> {
+                const { id, poster_path: url, overview, backdrop_path: backdrop, vote_average: vote } = item
                     if (type === 'movie') {
                         const { title, release_date: released } = item
                         return { id, title, url, overview, released, backdrop, vote }
                     }
                     const { original_name: title, first_air_date: released, } = item
-                    return { id, title, url, overview, released, backdrop, vote } }))
-    return setMovies(results)
+                    return { id, title, url, overview, released, backdrop, vote } })
+            return setMovies(results)
+        })
 }
 
-const getTrending = async (setTrending, weekType) => {
-    const results = await axios.get(`${ url }/trending/all/${ weekType }?api_key=${ key }`)
-    .then(data => data.data.results.map(item => {
-                    const { id, poster_path: url, overview, backdrop_path: backdrop, vote_average: vote, media_type } = item
+const getTrending = (setTrending, weekType) => {
+    axios.get(`${ url }/trending/all/${ weekType }?api_key=${ key }`)
+        .then(async data => {
+            const results = await data.data.results.map(item => {
+                const { id, poster_path: url, overview, backdrop_path: backdrop, vote_average: vote, media_type } = item
                     if (media_type === 'movie') {
                         const { title, release_date: released } = item
                         return { id, title, url, overview, released, backdrop, vote, media_type }
                     }
                     const { original_name: title, first_air_date: released, } = item
-                    return { id, title, url, overview, released, backdrop, vote, media_type } }))
-    return setTrending(results)
+                    return { id, title, url, overview, released, backdrop, vote, media_type } })
+            return setTrending(results)
+        })
 }
 
-const getMovies = async (array, setMovies, selectOption, pages) => {
-    const results = await axios.get(`${ url }/movie/${ selectOption }?api_key=${ key }&language=en-US&page=${ pages }`)
-    .then(data => data.data.results.map(item => {
-                    const { id, title, poster_path: url, overview, release_date: released, backdrop_path: backdrop, vote_average: vote } = item
-                    return { id, title, url, overview, released, backdrop, vote } }))
-    if (!results) return
-    if (!array.length) return setMovies(results)
-    if (!results) return
-    const newArray = [...array]
-    setMovies([...newArray, ...results])
+// Movie Functional
+const getMovies = (setMovies, selectOption) => {
+    axios.get(`${url}/movie/${selectOption}?api_key=${key}&language=en-US&page=1`)
+    .then(async data=> {
+        const results = await data.data.results.map(item=> {
+            const { id, title, poster_path: url, overview, release_date: released, backdrop_path: backdrop, vote_average: vote } = item
+            return { id, title, url, overview, released, backdrop, vote } 
+        })
+        setMovies(results)
+    })
 }
 
-const getTvs = async (array, setTvs, selectOption, pages) => {
-    const results = await axios.get(`${ url }/tv/${ selectOption }?api_key=${ key }&language=en-US&page=${ pages }`)
-    .then(data => data.data.results.map(item => {
-                    const { id, original_name: title, poster_path: url, overview, first_air_date: released, backdrop_path: backdrop, vote_average: vote } = item
-                    return { id, title, url, overview, released, backdrop, vote } }))
-    if (!results) return
-    if (!array.length) return setTvs(results)
-    if (!results) return
-    const newArray = [...array]
-    setTvs([...newArray, ...results])
+const loadMoreMovies = (setMovies, selectOption, pages, movies)=> {
+    axios.get(`${url}/movie/${selectOption}?api_key=${key}&language=en-US&page=${pages}`)
+    .then(async data=> {
+        const results = await data.data.results.map(item=> {
+            const { id, title, poster_path: url, overview, release_date: released, backdrop_path: backdrop, vote_average: vote } = item
+            return { id, title, url, overview, released, backdrop, vote } 
+        })
+        const newArray = [...movies]
+        setMovies([...newArray, ...results])
+    })
 }
+
+const getSearchMovie = (search, setSearchMovies) => {
+    axios.get(`${ url }/search/movie?api_key=289ceb9c9f5fe2b134e1433ef8599082&language=en-US&query=${search}&page=1&include_adult=false`)
+    .then(async data => {
+        const results = await data.data.results.map(movie => {
+            const { id, title, poster_path: url, overview, release_date: released, backdrop_path: backdrop, vote_average: vote } = movie
+            return { id, title, url, overview, released, backdrop, vote }
+        })
+    setSearchMovies(results)
+    })
+}
+
+// TV Function //
+const getTvs = (setTvs, selectOption) => {
+    axios.get(`${url}/tv/${selectOption}?api_key=${key}&language=en-US&page=1`)
+    .then(async data=> {
+        const results = await data.data.results.map(item => {
+            const { id, original_name: title, poster_path: url, overview, first_air_date: released, backdrop_path: backdrop, vote_average: vote } = item
+            return { id, title, url, overview, released, backdrop, vote } 
+        })
+        setTvs(results)
+    })
+}
+
+const loadMoreTvs = (setTvs, selectOption, pages, tvs)=> {
+    axios.get(`${url}/tv/${selectOption}?api_key=${key}&language=en-US&page=${pages}`)
+    .then(async data=> {
+        const results = await data.data.results.map(item=> {
+            const { id, original_name: title, poster_path: url, overview, first_air_date: released, backdrop_path: backdrop, vote_average: vote } = item
+            return { id, title, url, overview, released, backdrop, vote } 
+        })
+        const newArray = [...tvs]
+        setTvs([...newArray, ...results])
+    })
+}
+
+
+
+
+
 
 const getReviews = async(id, path, setReviews)=> {
     const results = await axios.get(`${ url }/${ path }/${ id }/reviews?api_key=${key}&language=en-US&page=1)`)
@@ -74,4 +118,4 @@ const getRecommend = async(id, path, setRecommend) => {
     return setRecommend(results)
 }
 
-export { getPopular, getTrending, getMovies, getTvs, getReviews, getCredits, getRecommend }
+export { getPopular, getTrending, getMovies, loadMoreMovies, getSearchMovie, getTvs, loadMoreTvs, getReviews, getCredits, getRecommend }
