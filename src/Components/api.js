@@ -108,6 +108,19 @@ const loadMoreTvs = (setTvs, selectOption, pages, tvs)=> {
     })
 }
 
+const getSearchTv = (search, setSearchTv) => {
+    axios.get(`${ url }/search/tv?api_key=289ceb9c9f5fe2b134e1433ef8599082&language=en-US&query=${search}&page=1&include_adult=false`)
+    .then(async data => {
+        const results = await data.data.results.map(item=> {
+            let { id, original_name: title, poster_path: url, overview, first_air_date: released, backdrop_path: backdrop, vote_average: vote } = item
+            if (!url) url = noImage
+            else url = `https://image.tmdb.org/t/p/w500${url}`
+            return { id, title, url, overview, released, backdrop, vote } 
+        })
+    setSearchTv(results)
+    })
+}
+
 // All Track Information funtional
 const getReviews = async (id, path, setReviews)=> {
     const results = await axios.get(`${ url }/${ path }/${ id }/reviews?api_key=${key}&language=en-US&page=1)`)
@@ -136,4 +149,4 @@ const getRecommend = (id, path, setRecommend) => {
     })
 }
 
-export { getPopular, getTrending, getMovies, loadMoreMovies, getSearchMovie, getTvs, loadMoreTvs, getReviews, getCredits, getRecommend }
+export { getPopular, getTrending, getMovies, loadMoreMovies, getSearchMovie, getTvs, loadMoreTvs, getSearchTv, getReviews, getCredits, getRecommend }
