@@ -21,6 +21,7 @@ export default function Movie ({ loadMovie, setSelectTrack }) {
 
     useEffect(()=> {
         if (!loadMovie) return
+        window.history.pushState({}, null, '/')
         setMovies([])
         setPages(1)
         getMovies(setMovies, selectOption)
@@ -50,7 +51,7 @@ export default function Movie ({ loadMovie, setSelectTrack }) {
                      style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectMovie.backdrop }')`}}>
                     <div className="col-sm-10 mx-auto p-3 p-md-0">
                         <div className="d-flex pt-3 pl-3 pl-md-5">
-                            <img className="d-none d-md-block shadow-sm border" src= { "https://image.tmdb.org/t/p/w500" + selectMovie.url } alt={ selectMovie.title } 
+                            <img className="d-none d-md-block shadow-sm border" src= { selectMovie.url } alt={ selectMovie.title } 
                                  style={{ width: '250px', height: '350px', borderRadius: '30px' }}  />
                             <div className="card-body d-flex flex-column">
                                 <h1 className="display-5">{ selectMovie.title }</h1>
@@ -66,6 +67,8 @@ export default function Movie ({ loadMovie, setSelectTrack }) {
                     </div>
                 </div>
                 : null }
+                { search ? <Search searchMovies={ searchMovies } setSelectTrack={ setSelectTrack }/>
+                         :
                 <div className="col-sm-10 mx-auto p-3 p-md-0">
                     <div className="container-fluid d-md-flex p-0 justify-content-md-center">
                         <h2 className="display-5 mb-3 mb-md-0">Movies</h2>
@@ -76,29 +79,27 @@ export default function Movie ({ loadMovie, setSelectTrack }) {
                                         setSelectOption(options[key]) }}>{ key }</button> )) }
                         </div>
                     </div>
-                    { search ? <Search searchMovies={ searchMovies } setSelectTrack={ setSelectTrack }/>
-                        :
-                        <div className="poster-container py-4">
-                            { movies.length ? movies.map(item => {
-                                const { id, title, url, released } = item
-                                item.path = 'movie'
-                                const date = released.replace('/-/g', '')
-                                return  <Link className="poster flex-shrink-0 mr-3 mb-md-3 " key={ id + '-movie' } to={ '/track-info' } 
-                                            onClick={()=> { setSelectTrack(item) }}>
-                                            <img className="mb-1 img-fluid rounded" src= { "https://image.tmdb.org/t/p/w200" + url } alt={ title } />
-                                            <div>{ title }</div>
-                                            <div className="text-muted">{ moment(date).fromNow() }</div>
-                                        </Link>
-                            }) : null }
-                            { pages < 3 ? 
-                                    <div className="poster flex-shrink-0 mr-3 mb-md-3 row ml-0">
-                                        <button className="btn px-4 btn-primary my-auto" type="button" 
-                                                style={{ borderRadius: '30px'}}
-                                                onClick={() => { setPages(pages+1); setLoad(!load) }}>+ More Movies</button>
-                                    </div>
-                                : null } 
-                        </div>
-                    }
+                    <div className="poster-container py-4">
+                        { movies.length ? movies.map(item => {
+                            let { id, title, url, released } = item
+                            item.path = 'movie'
+                            const date = released ? released.replace('/-/g', '') : ''
+                            return  <Link className="poster flex-shrink-0 mr-3 mb-md-3 " key={ id + '-movie' } to={ '/track-info' } 
+                                        onClick={()=> { setSelectTrack(item) }}>
+                                        <img className="mb-1 img-fluid rounded" src= { url } alt={ title } />
+                                        <div>{ title }</div>
+                                        <div className="text-muted">{ moment(date).fromNow() }</div>
+                                    </Link>
+                        }) : null }
+                        { pages < 3 ? 
+                                <div className="poster flex-shrink-0 mr-3 mb-md-3 row ml-0">
+                                    <button className="btn px-4 btn-primary my-auto" type="button" 
+                                            style={{ borderRadius: '30px'}}
+                                            onClick={() => { setPages(pages+1); setLoad(!load) }}>+ More Movies</button>
+                                </div>
+                            : null } 
+                    </div>
                 </div>
+                }
             </div>
 }

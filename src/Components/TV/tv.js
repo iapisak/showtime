@@ -18,6 +18,7 @@ export default function TV ({ loadTv, setSelectTrack }) {
     
     useEffect(()=> {
         if (!loadTv) return
+        window.history.pushState({}, null, '/')
         setTvs([])
         setPages(1)
         getTvs(setTvs, selectOption)
@@ -43,7 +44,7 @@ export default function TV ({ loadTv, setSelectTrack }) {
                      style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectTvs.backdrop }')`}}>
                     <div className="col-sm-10 mx-auto p-3 p-md-0">
                         <div className="d-flex pt-3 pl-3 pl-md-5">
-                            <img className="d-none d-md-block shadow-sm border" src= { "https://image.tmdb.org/t/p/w500" + selectTvs.url } alt={ selectTvs.title } 
+                            <img className="d-none d-md-block shadow-sm border" src= { selectTvs.url } alt={ selectTvs.title } 
                                  style={{ width: '250px', height: '350px', borderRadius: '30px' }}  />
                             <div className="card-body d-flex flex-column">
                                 <h1 className="display-5">{ selectTvs.title }</h1>
@@ -73,10 +74,10 @@ export default function TV ({ loadTv, setSelectTrack }) {
                     { tvs.length ? tvs.map(item => {
                         const { id, title, url, released } = item
                         item.path = 'tv'
-                        const date = released.replace('/-/g', '')
+                        const date = released ? released.replace('/-/g', '') : ''
                         return  <Link className="poster flex-shrink-0 mr-3 mb-md-3 " key={ id + '-tv' } to={ '/track-info' } 
                                       onClick={()=> { setSelectTrack(item) }}>
-                                    <img className="mb-1 img-fluid rounded" src= { "https://image.tmdb.org/t/p/w200" + url } alt={ title } />
+                                    <img className="mb-1 img-fluid rounded" src= { url } alt={ title } />
                                     <div>{ title }</div>
                                     <div className="text-muted">{ moment(date).fromNow() }</div>
                                 </Link>

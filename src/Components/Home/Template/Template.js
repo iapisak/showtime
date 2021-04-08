@@ -27,13 +27,13 @@ export default function Template ({ data, head, type, setType, setSelectTrack })
                 </div>
                 <div className="item-container d-flex overflow-auto pl-2 pl-md-4 py-4">
                     { data ? data.map(item => {
-                        const { id, title, url, released } = item
+                        let { id, title, url, released } = item
                         item.path = item.media_type ? item.media_type : type
-                        const date = released.replace('/-/g', '')
+                        let date = released ? released.replace('/-/g', '') : ''
                         return  <Link className="item" key={ id } to={ '/track-info' } onClick={()=> { setSelectTrack(item) }}>
                                     <img className="mb-1 rounded" 
                                         style={{ width: '11rem' }}
-                                        src= { "https://image.tmdb.org/t/p/w200" + url } 
+                                        src= { url } 
                                         alt={ title } />
                                     <div>{ title }</div>
                                     { type || item.media_type === 'movie' ? <div className="text-muted">{ moment(date).fromNow() }</div>
