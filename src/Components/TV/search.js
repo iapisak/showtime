@@ -17,7 +17,7 @@ export default function Search ({ searchTvs, setSelectTrack }) {
                                 <div>{ title }</div>
                                 <div className="text-muted">{ moment(released).fromNow() }</div>
                             </Link>
-                }) : null }
+                }) : <h4>No Tv shows found, Please try again</h4> }
                 </div>
             </div>
 }

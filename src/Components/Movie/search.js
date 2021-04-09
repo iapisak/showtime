@@ -18,7 +18,7 @@ export default function Search ({ searchMovies, setSelectTrack }) {
                                 <div>{ title }</div>
                                 <div className="text-muted">{ moment(date).fromNow() }</div>
                             </Link>
-                }) : null }
+                }) : <h4>No movie found, Please try again</h4> }
                 </div>
             </div>
 }

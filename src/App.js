@@ -14,7 +14,7 @@ export default withRouter(function App() {
             <main className='container-fluid p-0' style={{ overflow: 'scroll' }} >
               <Routes loadMovie={ loadMovie } loadTv={ loadTv } selectTrack={ selectTrack } setSelectTrack={ setSelectTrack }/>
             </main>
-            <footer className="py-3 text-white-50 text-center">
+            <footer className="py-3 text-white-50 text-center mt-auto" style={{ backgroundColor: '#0d253f' }}>
                 <p className="m-0">Data base from <span className="text-white">TMP</span>, project By <span className="text-white">@Jun</span>.</p>
             </footer>
           </div>

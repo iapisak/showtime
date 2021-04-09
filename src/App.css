@@ -10,16 +10,8 @@ a:link {
   text-decoration: none;
 }
 
-.header-container {
-  height: 50vh;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
-}
-
 .home-container {
   display: flex;
-  /* align-items: center; */
   height: 50vh;
   background-repeat: no-repeat;
   background-position: center;

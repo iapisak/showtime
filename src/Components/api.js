@@ -3,7 +3,7 @@ import axios from 'axios'
 const url = process.env.REACT_APP_API_URL
 const key = process.env.REACT_APP_API_KEY
 
-const noImage = 'https://www.burmunk.am/themes/burmunk/assets/no-product-image.png'
+const noImage = 'https://images.unsplash.com/photo-1487260211189-670c54da558d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80'
 
 const getPopular = (setMovies, type) => {
     axios.get(`${ url }/${ type }/popular?api_key=${ key }&language=en-US&page=1`)

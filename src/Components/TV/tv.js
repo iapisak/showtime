@@ -64,7 +64,7 @@ export default function TV ({ loadTv, setSelectTrack }) {
                                 <div className="search-bar col col-md-8 p-0">
                                     <div className="search-group">
                                         <input className="search-input" value={ search } onChange={(e)=> setSearch(e.target.value)}
-                                                placeholder="Search for movies"/>
+                                                placeholder="Search for Tv Shows"/>
                                     </div>
                                     <button className="search-button btn-primary disabled" onClick={()=> setSearch('')}>
                                         <i className="fa fa-times text-grey"aria-hidden="true"></i>
