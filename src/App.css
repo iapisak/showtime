@@ -1,3 +1,7 @@
+body {
+  font-weight: 100;
+}
+
 a {
   color: whitesmoke;
 }
@@ -16,6 +20,16 @@ a:link {
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
+}
+
+.review-container {
+  height: 25vh;
+  padding-bottom: 20px;
+  overflow-Y: auto;
+}
+
+.line {
+  border-color: whitesmoke;
 }
 
 .item {
@@ -50,14 +64,13 @@ a:link {
 
 .poster {
   text-decoration: none;
-  /* cursor: pointer; */
   width: 10rem;
   height: auto;
   transition: all .2s ease-in-out;
 }
 
 .poster:hover {
-  transform: scale(1.04)
+  transform: scale(0.96)
 }
 
 .search-bar {
@@ -92,6 +105,15 @@ a:link {
   margin: 7px 8px;
   border-radius: 50px;
   outline: none !important;
+}
+
+.recommend {
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.recommend:hover {
+  transform: scale(0.97)
 }
 
 @media (min-width: 992px) {  

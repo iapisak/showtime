@@ -55,7 +55,7 @@ export default function TV ({ loadTv, setSelectTrack }) {
                                     style={{ width: '250px', height: '350px', borderRadius: '30px' }}  />
                             <div className="card-body p-0 pl-md-4">
                                 <h1 className="display-6 font-weight-bold m-0">{ Object.keys(options).find(key => options[key] === selectOption) } Tvs</h1>
-                                <h1 className="display-5">{ selectTvs.title }</h1>
+                                <h1 className="display-5 text-warning">{ selectTvs.title }</h1>
                                 <div className="text-container">
                                     <p className="col col-md-10 p-0">{ selectTvs.overview }</p>
                                 </div>
@@ -83,7 +83,8 @@ export default function TV ({ loadTv, setSelectTrack }) {
                         <div className="btn-group ml-md-4 btn-group-toggle" data-toggle="buttons">
                             { Object.keys(options).map((key, index)=> {
                                     return  <label key={key} className={ index === 0 ? "btn btn-dark shadow-none active" : "btn btn-dark shadow-none" }
-                                                  onClick={()=> { if (options[key] === selectOption) return
+                                                   style={{ color: '#ffc107'}}
+                                                   onClick={()=> { if (options[key] === selectOption) return
                                                                 setSelectOption(options[key]) }}>
                                                 <input type="radio" name={key} id={key} autoComplete="off"/>{key}
                                             </label>

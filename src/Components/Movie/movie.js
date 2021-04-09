@@ -55,7 +55,7 @@ export default function Movie ({ loadMovie, setSelectTrack }) {
                                  style={{ width: '250px', height: '350px', borderRadius: '30px' }}  />
                             <div className="card-body p-0 pl-md-4">
                                 <h1 className="display-6 font-weight-bold m-0">{ Object.keys(options).find(key => options[key] === selectOption) } Movies</h1>
-                                <h1 className="display-5">{ selectMovie.title }</h1>
+                                <h1 className="display-5 text-warning">{ selectMovie.title }</h1>
                                 <div className="text-container">
                                     <p className="col col-md-10 p-0">{ selectMovie.overview }</p>
                                 </div>
@@ -79,10 +79,11 @@ export default function Movie ({ loadMovie, setSelectTrack }) {
                          :
                 <div className="col-sm-10 mx-auto p-3 p-md-0">
                     <div className="container-fluid d-md-flex p-0 justify-content-md-center">
-                        <h2 className="display-5 mb-3 mb-md-0">Movies</h2>
+                        <h2 className="display-5 mb-3 mb-md-0" >Movies</h2>
                         <div className="btn-group ml-md-4 btn-group-toggle" data-toggle="buttons">
                             { Object.keys(options).map((key, index)=> {
-                                    return  <label key={key} className={ index === 0 ? "btn btn-dark shadow-none active" : "btn btn-dark shadow-none" }
+                                    return  <label key={key} className={ index === 0 ? "btn btn-dark shadow-none active" : "btn btn-dark shadow-none"}
+                                                    style={{ color: '#ffc107'}}
                                                   onClick={()=> { if (options[key] === selectOption) return
                                                                 setSelectOption(options[key]) }}>
                                                 <input type="radio" name={key} id={key} autoComplete="off"/>{key}
