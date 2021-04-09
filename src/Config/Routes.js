@@ -10,6 +10,6 @@ export default function Routes ({ loadMovie, loadTv, selectTrack, setSelectTrack
                 <Route exact path='/' render={() => <Home setSelectTrack={ setSelectTrack }/> } />
                 <Route path='/movie' render={() => <Movie loadMovie={ loadMovie } setSelectTrack={ setSelectTrack } /> } />
                 <Route path='/tv' render={() => <Tv loadTv={ loadTv } setSelectTrack={ setSelectTrack } /> } />
-                <Route path='/track-info' render={() => <Info selectTrack={ selectTrack }/> } />
+                <Route path='/track-info' render={() => <Info selectTrack={ selectTrack } setSelectTrack={ setSelectTrack }/> } />
             </Switch>
 }
