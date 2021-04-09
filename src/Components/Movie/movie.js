@@ -50,7 +50,7 @@ export default function Movie ({ loadMovie, setSelectTrack }) {
                 <div className="home-container mb-4" 
                      style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectMovie.backdrop }')`}}>
                     <div className="col-sm-10 mx-auto p-3">
-                        <div className="d-flex">
+                        <div className="d-flex mt-md-3">
                             <img className="d-none d-md-block shadow-sm border" src= { selectMovie.url } alt={ selectMovie.title } 
                                  style={{ width: '250px', height: '350px', borderRadius: '30px' }}  />
                             <div className="card-body p-0 pl-md-4">
@@ -64,10 +64,10 @@ export default function Movie ({ loadMovie, setSelectTrack }) {
                                 <div className="search-bar col col-md-8 p-0">
                                     <div className="search-group">
                                         <input className="search-input" value={ search } onChange={(e)=> setSearch(e.target.value)}
-                                                placeholder="Search for movies"/>
+                                               placeholder="Search for movies"/>
                                     </div>
-                                    <button className="search-button btn-primary disabled">
-                                        <i className="fa fa-search text-grey"aria-hidden="true"></i>
+                                    <button className="search-button btn-primary disabled" onClick={()=> setSearch('')}>
+                                        <i className="fa fa-times text-grey"aria-hidden="true"></i>
                                     </button>
                                 </div>
                             </div>
@@ -91,7 +91,9 @@ export default function Movie ({ loadMovie, setSelectTrack }) {
                         </div>
                     </div>
                     <div className="poster-container py-4">
-                        { movies.length ? movies.map(item => {
+                        { movies.length ? 
+                        <>
+                        { movies.map(item => {
                             let { id, title, url, released } = item
                             item.path = 'movie'
                             return  <Link className="poster flex-shrink-0 pr-2 pb-md-3 " key={ id + '-movie' } to={ '/track-info' } 
@@ -99,15 +101,18 @@ export default function Movie ({ loadMovie, setSelectTrack }) {
                                         <img className="mb-1 img-fluid rounded" src= { url } alt={ title } />
                                         <div>{ title }</div>
                                         <div className="text-muted">{ moment(released).fromNow() }</div>
-                                    </Link>
-                        }) : null }
-                        { pages < 3 ? 
-                                <div className="poster flex-shrink-0 ml-0 d-flex flex-column">
+                                    </Link> }) 
+                        }
+                        { pages < 3 
+                            ?   <div className="poster flex-shrink-0 ml-0 d-flex flex-column">
                                     <button className="btn px-4 btn-primary my-auto mx-auto" type="button" 
-                                            style={{ borderRadius: '30px'}}
+                                            style={{ borderRadius: '30px'}} 
                                             onClick={() => { setPages(pages+1); setLoad(!load) }}>+ More Movies</button>
                                 </div>
-                            : null } 
+                            : null 
+                        }
+                        </>
+                            : null }
                     </div>
                 </div>
                 }

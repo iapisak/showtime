@@ -4,24 +4,26 @@ import moment from 'moment'
 export default function Template ({ data, head, options, setOptions, setSelectTrack }) {
     return  <div className="col-sm-10 mx-auto p-0">
                 <div className="container-fluid d-flex pl-md-4">
-                    <h2 className="display-5">{ head }</h2>
+                    <h2 className="display-5 m-0">{ head }</h2>
                     { head === 'Popular'    ? <div className="btn-group btn-group-toggle ml-auto" data-toggle="buttons">
-                                                <button type="button" className="btn shadow-none btn-dark" onClick={()=> {
-                                                    if (options === 'movie') return
-                                                        setOptions('movie')
-                                                    }}>Movies</button>
-                                                <button type="button" className="btn shadow-none btn-dark" onClick={()=> {
-                                                    if (options === 'tv') return
-                                                    setOptions('tv')}}>TV</button>
+                                                <label className="btn btn-dark shadow-none active"
+                                                       onClick={()=> { if (options === 'movie') return; setOptions('movie') }} >
+                                                    <input type="radio" name='movies' id='movies' autoComplete="off"/>Movies
+                                                </label>
+                                                <label className="btn btn-dark shadow-none"
+                                                       onClick={()=> { if (options === 'tv') return; setOptions('tv') }} >
+                                                    <input type="radio" name='tv' id='tv' autoComplete="off"/>Tv shows
+                                                </label>
                                               </div>
                                             : <div className="btn-group btn-group-toggle ml-auto" data-toggle="buttons">
-                                                <button type="button" className="btn shadow-none btn-dark" onClick={()=> {
-                                                    if (options === 'day') return
-                                                    setOptions('day')
-                                                    }}>Today</button>
-                                                <button type="button" className="btn shadow-none btn-dark" onClick={()=> {
-                                                    if (options === 'week') return
-                                                    setOptions('week')}}>Week</button>
+                                                <label className="btn btn-dark shadow-none active"
+                                                       onClick={()=> { if (options === 'day') return; setOptions('day') }} >
+                                                    <input type="radio" name='day' id='day' autoComplete="off"/>Today
+                                                </label>
+                                                <label className="btn btn-dark shadow-none"
+                                                       onClick={()=> { if (options === 'week') return; setOptions('week') }} >
+                                                    <input type="radio" name='week' id='week' autoComplete="off"/>Week
+                                                </label>
                                             </div> }
                 </div>
                 <div className="item-container d-flex overflow-auto pl-2 pl-md-4 py-4">

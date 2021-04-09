@@ -35,7 +35,7 @@ export default function Home ({ setSelectTrack }) {
                 <>
                 <div className="home-container mb-4" 
                      style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectPopular.backdrop }')`}}>
-                    <div className="col-sm-10 mx-auto pl-md-3">
+                    <div className="col-sm-10 mx-auto p-3 mt-5">
                         <h1 className="display-5">Popular on { type === 'movie' ? 'Movies' : 'TV'}</h1>
                         <h1 className="display-5">{ selectPopular.title }</h1>
                         <p className="col-md-8 p-0">{selectPopular.overview }</p>
@@ -49,7 +49,7 @@ export default function Home ({ setSelectTrack }) {
                 <>
                 <div className="home-container mb-4" 
                       style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectTrending.backdrop }')`}}>
-                    <div className="col-sm-10 mx-auto pl-md-3">
+                    <div className="col-sm-10 mx-auto p-3 mt-5">
                         <h1 className="display-5">Trending { weekType === 'day' ? 'Today' : 'This Week' }</h1>
                         <h1 className="display-5">{ selectTrending.title }</h1>
                         <p className="col-md-8 p-0">{ selectTrending.overview }</p>

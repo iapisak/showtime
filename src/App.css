@@ -19,7 +19,7 @@ a:link {
 
 .home-container {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   height: 50vh;
   background-repeat: no-repeat;
   background-position: center;
