@@ -38,7 +38,9 @@ export default function Home ({ setSelectTrack }) {
                     <div className="col-sm-10 mx-auto p-3 mt-5">
                         <h1 className="display-5">Popular on { type === 'movie' ? 'Movies' : 'TV'}</h1>
                         <h1 className="display-5">{ selectPopular.title }</h1>
-                        <p className="col-md-8 p-0">{selectPopular.overview }</p>
+                        <div className="text-container">
+                          <p className="col-md-8 p-0">{selectPopular.overview }</p>
+                        </div>
                     </div>
                 </div>
                 <Template data={ popular } head='Popular' options={ type } setOptions={ setType } setSelectTrack={ setSelectTrack } />
@@ -52,7 +54,9 @@ export default function Home ({ setSelectTrack }) {
                     <div className="col-sm-10 mx-auto p-3 mt-5">
                         <h1 className="display-5">Trending { weekType === 'day' ? 'Today' : 'This Week' }</h1>
                         <h1 className="display-5">{ selectTrending.title }</h1>
-                        <p className="col-md-8 p-0">{ selectTrending.overview }</p>
+                        <div className="text-container">
+                          <p className="col-md-8 p-0">{ selectTrending.overview }</p>
+                        </div>
                     </div>
                 </div>
                 <Template data={ trending } head='Trending' options={ weekType } setOptions={ setWeekType } setSelectTrack={ setSelectTrack } />

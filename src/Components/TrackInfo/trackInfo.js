@@ -43,49 +43,47 @@ export default function TrackInfo ({ selectTrack, setSelectTrack }) {
                         </div>
                         <div className="blog-post">
                             <h2 className="blog-post-title">Reviews</h2>
-                            { reviews ? reviews.map(item => {
+                            { reviews && reviews.length ? reviews.map(item => {
                                 let date = item.updated_at ? item.updated_at.split('T')[0] : null
-                                return  <div key={ item.id }>
+                                return  <div key={ item.id + reviews }>
                                             <p className="blog-post-meta">On { `${moment(date).format('MMM D, YYYY')} - ${moment(date).fromNow()}` } By { item.author }</p>
                                             <p>{ item.content }</p><hr />
                                         </div> })
-                            : null }
+                            : <h2>No review yet</h2> }
                         </div>
                         <div className="blog-post">
                             <h2 className="blog-post-title m-0">Similar</h2>
                             <div className="item-container d-flex overflow-auto pl-2 pl-md-4 py-4">
-                                { recommend ? recommend.map(item => {
+                                { recommend && recommend.length ? recommend.map(item => {
                                     const { id, title, backdrop } = item
                                     item.path = selectTrack.path
-                                    return  <div className="item" key={ id } to={ '/track-info' } onClick={()=> { setSelectTrack(item) }}>
+                                    return  <div className="item" key={ id + 'recommend' } to={ '/track-info' } onClick={()=> { setSelectTrack(item) }}>
                                                 <img className="mb-1 rounded" 
                                                     style={{ width: '20rem' }}
                                                     src= { "https://image.tmdb.org/t/p/original" + backdrop } 
                                                     alt={ title } />
                                                 <div>{ title }</div>
                                             </div> }) 
-                                : null }
+                                : <h2>No recommendation yet</h2> }
                             </div>
                         </div> 
                     </div>
 
                     <aside className="col-md-3 mr-auto blog-sidebar">
                         { credits ? 
-                        <div className="p-3 mb-3 bg-dark rounded">
-                            <h2 className="font-italic mb-3">Casts</h2>
-                            <div className="" style={{ height: '700px', overflowY: 'auto' }}>
+                        <div className="p-3 mb-3 bg-dark rounded d-flex flex-column">
+                            <h2 className="font-italic mb-3">Casts <span>{credits.length} found</span></h2>
+                            <div className="flex-grow-1" style={{ height: '100vh', overflowY: 'auto' }}>
 
                             
                             <ol className="list-unstyled mb-0">
                                 { credits.map(actor => {
                                     const noImage = 'https://www.exstrompt.com/wp-content/uploads/2015/07/placeholder-user.jpg'
                                     const image = actor.profile_path ? `https://image.tmdb.org/t/p/w500${actor.profile_path}` : noImage
-                                    return  <li key={ actor.id } className='d-flex mb-2' >
-                                        <div style={{ width: '3rem' }}>
-
-                                            <img className="img-fluid"
-                                                     src= { image } alt={ actor.name } />
-                                        </div>
+                                    return  <li key={ actor.id + 'credits'} className='d-flex mb-2' >
+                                                <div style={{ width: '3rem' }}>
+                                                    <img className="img-fluid" src= { image } alt={ actor.name } />
+                                                </div>
                                                 <p className="pl-3">{ actor.name }<br/>{ actor.character }</p>
                                             </li> })}
                             </ol>
