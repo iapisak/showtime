@@ -33,13 +33,13 @@ export default function Home ({ setSelectTrack }) {
     return  <div id="home">
             { selectPopular ?
                 <>
-                <div className="home-container mb-4" 
+                <div className="home-container mb-4 overflow-auto" 
                      style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectPopular.backdrop }')`}}>
-                    <div className="col-sm-10 mx-auto p-3 mt-5">
+                    <div className="col-sm-10 mx-auto p-3 mt-md-5">
                         <h1 className="display-5">Popular on { type === 'movie' ? 'Movies' : 'TV'}</h1>
-                        <h1 className="display-5">{ selectPopular.title }</h1>
-                        <div className="text-container">
-                          <p className="col-md-8 p-0">{selectPopular.overview }</p>
+                        <h1 className="display-5 text-warning">{ selectPopular.title }</h1>
+                        <div className="">
+                          <p className="col-md-8 p-0" >{selectPopular.overview }</p>
                         </div>
                     </div>
                 </div>
@@ -53,8 +53,8 @@ export default function Home ({ setSelectTrack }) {
                       style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectTrending.backdrop }')`}}>
                     <div className="col-sm-10 mx-auto p-3 mt-5">
                         <h1 className="display-5">Trending { weekType === 'day' ? 'Today' : 'This Week' }</h1>
-                        <h1 className="display-5">{ selectTrending.title }</h1>
-                        <div className="text-container">
+                        <h1 className="display-5 text-warning">{ selectTrending.title }</h1>
+                        <div className="">
                           <p className="col-md-8 p-0">{ selectTrending.overview }</p>
                         </div>
                     </div>
