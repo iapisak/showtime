@@ -49,19 +49,18 @@ export default function TV ({ loadTv, setSelectTrack }) {
             { selectTvs ? 
                 <div className="home-container mb-4" 
                         style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://image.tmdb.org/t/p/original/${ selectTvs.backdrop }')`}}>
-                    <div className="col-sm-10 mx-auto p-3">
-                        <div className="d-flex mt-md-3">
-                            <img className="d-none d-md-block shadow-sm border" src= { selectTvs.url } alt={ selectTvs.title } 
-                                    style={{ width: '250px', height: '350px', borderRadius: '30px' }}  />
+                    <div className="col-sm-8 mx-auto p-3">
+                        <div className="d-flex my-4 my-md-5 align-items-center">
+                            <img className="d-none d-md-block shadow-sm p-4" src= { selectTvs.url } alt={ selectTvs.title } 
+                                 style={{ width: '250px', height: '350px', border: '15px solid white' }}  />
                             <div className="card-body p-0 pl-md-4">
-                                <h1 className="display-6 font-weight-bold m-0">{ Object.keys(options).find(key => options[key] === selectOption) } Tvs</h1>
-                                <h1 className="display-5 text-warning">{ selectTvs.title }</h1>
-                                <div className="text-container">
-                                    <p className="col col-md-10 p-0">{ selectTvs.overview }</p>
+                                <h1 className="display-5 text-warning">{ Object.keys(options).find(key => options[key] === selectOption) } Tvs</h1>
+                                <h2 className="display-6">{ selectTvs.title }</h2>
+                                <div>
+                                    <p className="col col-md-10 p-0 text-secondary">{ selectTvs.overview }</p>
                                 </div>
-                                <p className="p-0 mt-2">Released on { moment(selectTvs.released).format('MMM D, YYYY') } - { moment(selectTvs.released).fromNow() } 
-                                   <br />Voted { selectTvs.vote }</p>
-                                <div className="search-bar col col-md-8 p-0">
+                                <p className="p-0 mt-2">Released on { moment(selectTvs.released).format('MMM D, YYYY') } - { moment(selectTvs.released).fromNow() } </p>
+                                <div className="search-bar col col-md-10 p-0">
                                     <div className="search-group">
                                         <input className="search-input" value={ search } onChange={(e)=> setSearch(e.target.value)}
                                                 placeholder="Search for Tv Shows"/>
@@ -82,8 +81,7 @@ export default function TV ({ loadTv, setSelectTrack }) {
                         <h2 className="display-5 mb-3 mb-md-0">TV Shows</h2>
                         <div className="btn-group ml-md-4 btn-group-toggle" data-toggle="buttons">
                             { Object.keys(options).map((key, index)=> {
-                                    return  <label key={key} className={ index === 0 ? "btn btn-dark shadow-none active" : "btn btn-dark shadow-none" }
-                                                   style={{ color: '#ffc107'}}
+                                    return  <label key={key} className={ index === 0 ? "btn btn-primary shadow-none active" : "btn btn-primary shadow-none" }
                                                    onClick={()=> { if (options[key] === selectOption) return
                                                                 setSelectOption(options[key]) }}>
                                                 <input type="radio" name={key} id={key} autoComplete="off"/>{key}

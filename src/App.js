@@ -9,7 +9,7 @@ export default withRouter(function App() {
   const [ loadTv, setLoadTv ] = useState(false)
   const [ selectTrack, setSelectTrack ] = useState()
 
-  return  <div className="d-flex flex-column text-light" style={{ backgroundColor: '#212529', height: '100vh'}}>
+  return  <div className="d-flex flex-column text-light" style={{ backgroundColor: 'black', height: '100vh'}}>
             <Nav setLoadMovie={ setLoadMovie } setLoadTv={ setLoadTv }/>
             <main className='container-fluid p-0' style={{ overflow: 'scroll' }} >
               <Routes loadMovie={ loadMovie } loadTv={ loadTv } selectTrack={ selectTrack } setSelectTrack={ setSelectTrack }/>
